@@ -1,0 +1,18 @@
+Configuration:
+  Properties:
+    Property:
+      name: log-path
+      value: "logs"
+
+  Appenders:
+    File:
+      name: LogToFile
+      fileName: ${log-path}/application.log
+      PatternLayout:
+        pattern: "[%-5p] %d{yyyy-MM-dd HH:mm:ss} [%t] %c: %msg%n"
+
+  Loggers:
+    Root:
+      level: debug
+      AppenderRef:
+        - ref: LogToFile
