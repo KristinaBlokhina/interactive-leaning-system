@@ -261,8 +261,6 @@ public class BrowseNodes implements Command {
                     System.out.println("🚀 Starting learning from: " + selected.getTitle());
                     System.out.println("Course: " + course.getTitle());
 
-                    // Тут можна додати логіку для початку навчання з конкретного вузла
-                    // Наразі просто показуємо деталі
                     viewNodeDetails(selected);
                 } else {
                     System.out.println("❌ Cannot find parent course for this node");
