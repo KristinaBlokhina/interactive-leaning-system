@@ -63,8 +63,6 @@ public class StartLearning implements Command {
             Student student = Session.getCurrentStudent();
             if (student != null) {
                 student.setScore(1, score);
-
-                // ВИПРАВЛЯЄМО ТУТ: saveStudent замість save
                 Storage.saveStudent(student);
                 System.out.println("\n💾 Progress saved!");
             }
