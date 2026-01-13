@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Menu implements Command {
-
     private final String name;
     private final Scanner scanner;
     private final Map<String, Command> commands = new HashMap<>();
@@ -16,42 +15,48 @@ public class Menu implements Command {
     }
 
     @Override
-    public Result execute() {
-        if (commands.isEmpty()) {
-            System.out.println("Menu is empty. Returning.");
-            return Result.CONTINUE;
-        }
-
-        Result result;
-        do {
-            result = Result.CONTINUE;
-            prompt();
-            String input = scanner.nextLine();
-            Command command = commands.get(input);
-
-            if (command != null) {
-                result = command.execute();
-            } else {
-                System.out.println("Command not found.");
-            }
-
-        } while (result == Result.CONTINUE);
-
-        return result == Result.EXIT ? Result.EXIT : Result.CONTINUE;
+    public String name() {
+        return name;
     }
 
     @Override
-    public String name() {
-        return name;
+    public Result execute() {
+        Result result;
+        do {
+            // Красиве відображення меню
+            System.out.println("\n" + "=".repeat(50));
+            System.out.println("🎓 " + name.toUpperCase() + " MENU");
+            System.out.println("=".repeat(50));
+            System.out.print("Available commands: [");
+
+            // Виводимо команди через кому
+            int count = 0;
+            for (String cmd : commands.keySet()) {
+                System.out.print(cmd);
+                if (count < commands.size() - 1) {
+                    System.out.print(", ");
+                }
+                count++;
+            }
+            System.out.println("]");
+            System.out.println("Type 'help' for detailed information");
+            System.out.print("\n> ");
+
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            Command command = commands.get(input);
+            if (command != null) {
+                result = command.execute();
+            } else {
+                System.out.println("❌ Command '" + input + "' not found.");
+                System.out.println("💡 Type 'help' to see available commands.");
+                result = Result.CONTINUE;
+            }
+        } while (result == Result.CONTINUE);
+        return result;
     }
 
     public void add(Command command) {
         commands.put(command.name(), command);
     }
-
-    private void prompt() {
-        System.out.println("Available commands: " + commands.keySet());
-        System.out.print("> ");
-    }
 }
-

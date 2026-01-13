@@ -1,9 +1,10 @@
 package edu.system.model;
-
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Question {
+public class Question implements Serializable {  // ДОДАЄМО Serializable
+    private static final long serialVersionUID = 1L;
     private String text;
     private List<Answer> answers = new ArrayList<>();
 
